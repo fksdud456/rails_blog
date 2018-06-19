@@ -14,6 +14,7 @@ class PostController < ApplicationController
     # text 안에 변수를 넣을 때 (stringinterpolation)
     # 반드시 "" 로 해줘야 함
     redirect_to "/post/#{post.id}"
+    
     # 1-1. 예전버전의 문법
     # Post.create(:title => params[:title], :body => params[:body])
 
@@ -34,6 +35,16 @@ class PostController < ApplicationController
     redirect_to '/'
   end
 
+  def edit
+    @post = Post.find(params[:id])
+  end
 
+  def update
+    # post : instance != Post : class
+    post = Post.find_by(params[:id])
+    post.update(title: params[:title],
+                body: params[:body])
+    redirect_to "/post/#{post.id}"
+  end
 
 end
